@@ -3,8 +3,10 @@
 #include <unordered_map>
 #include <ctime>
 #include <fstream>
+#include <utility> 
+#include <cstdlib>
 
-std::pair <std::string,std::string> map;
+std::pair <std::string,std::string> map(std::string password);
 
 
 
@@ -14,6 +16,7 @@ int main(){
     std::string password;
     std::string name;
     std::string confrimpassword;
+    std::string encrypted_data;
 
     std::fstream info("data.csv",std::ios::app);
     std::cout << "Enter your user name:";
@@ -24,8 +27,8 @@ int main(){
     std::getline(std::cin,confrimpassword);
     if(password == confrimpassword){
         
-        std::string encripted = map(password,pass);
-        info << name<<","<<encripted<<","<<pass<<"\n";
+        std::pair<std::string, std::string> encrypted_data = map(password);
+        info << name<<","<<encrypted_data.first <<","<<encrypted_data.second<<"\n";
         info.close();
     }
     else{
@@ -36,7 +39,7 @@ int main(){
 }
 
 
-std::pair <std::string,std::string>map {
+std::pair <std::string,std::string>map(std::string password) {
 
 std::unordered_map<int, char> relation = {
     {100, 'A'}, {99, 'B'}, {98, 'C'}, {97, 'D'}, {96, 'E'}, {95, 'F'}, 
@@ -50,18 +53,23 @@ std::unordered_map<int, char> relation = {
     {56, 's'},  {55, 't'}, {54, 'u'}, {53, 'v'}, {52, 'w'}, {51, 'x'}, 
     {50, 'y'},  {49, 'z'}
 };
+    srand(time(NULL));
+    std::string number; 
+   for(int i = 0;i<password.length();i++){
+    int c = 0;
 
-    for(int i = 0;i<password.length();i++){
+    while(c<32 || c >126){
+        int pass = 49+(rand()%52);
         
-        srand(time(NULL));
         if (relation.find(pass) != relation.end()){
-    
-        int pass = 49+(rand()%50);
         char temp = relation[pass];
-        password[i] = 32 + ((password[i] + temp) % 95); 
+        c = 32 + ((password[i] - 32 + temp) % 95);
+        password[i] = c;
+        number=number + "|" + std::to_string(pass);
         }
 
     }
-    return {password,pass};
+    }
+    return {password,number};
 }
-
+                                          

@@ -10,11 +10,14 @@ class account{
 };
 
 int main(){
+    int a;
+    std::cout << "Hello what do you want to do today  press 1 to create a new account press 2 check blance";
 
     return 0;
 }
 
-void create(account *Name,account *balance,account *cardNo,account *pinNo,account accountNo){
+void create(account *Name,account *balance,account *cardNo,account *pinNo,account accountNo)
+{
     srand(time(NuLL));
     int genrated_a_no = 10000000 + (rand() % 90000000);
     account person1;

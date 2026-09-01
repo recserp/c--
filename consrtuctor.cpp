@@ -12,7 +12,7 @@ class student{
 };
 
 int main(){
-    student ozuss("ozuss",20);
+    student abc("xyz",20);
     std::cout << ozuss.name << ozuss.age;
     return 0;
 }

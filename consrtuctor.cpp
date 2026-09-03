@@ -13,6 +13,6 @@ class student{
 
 int main(){
     student abc("xyz",20);
-    std::cout << ozuss.name << ozuss.age;
+    std::cout << abc.name << abc.age;
     return 0;
 }
